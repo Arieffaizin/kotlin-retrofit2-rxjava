@@ -4,13 +4,9 @@ import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.util.Log
 import com.bumptech.glide.Glide
-import com.google.gson.GsonBuilder
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.activity_main.*
-import retrofit2.Retrofit
-import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
-import retrofit2.converter.gson.GsonConverterFactory
 
 class MainActivity : AppCompatActivity() {
 
@@ -18,18 +14,17 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        // Initialized GSON
-        val gson = GsonBuilder().create()
+//        // Initialized GSON (Deprecated : Using Companion Object)
+//        val gson = GsonBuilder().create()
+//
+//        // Initialized Retrofit (Deprecated : Using Companion Object)
+//        val retrofit = Retrofit.Builder()
+//                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+//                .addConverterFactory(GsonConverterFactory.create(gson))
+//                .baseUrl(BuildConfig.BASE_URL)
+//                .build()
 
-        // Initialized Retrofit
-        val retrofit: Retrofit = Retrofit.Builder()
-                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-                .addConverterFactory(GsonConverterFactory.create(gson))
-                .baseUrl(BuildConfig.BASE_URL)
-                .build()
-
-        val service: Service = retrofit.create(
-                Service::class.java)
+        val service = Service.create()
 
         // Get data from Github by Username
         service.getUser("arieffaizin")
